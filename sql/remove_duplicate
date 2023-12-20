@@ -41,10 +41,12 @@ Output:
 Explanation: john@example.com is repeated two times. We keep the row with the smallest Id = 1.
 
 
-QUERY:-
+QUERY:- (3rd one is slowest as it has join)
 
-select * from Person p where id in (select id from (select *, row_number() over(partition by email
+1. select * from Person p where id in (select id from (select *, row_number() over(partition by email
 order by id) as 'rn' from person) ct where ct.rn = 1);
 
-delete from Person p where id not in (select id from (select *, row_number() over(partition by email
-order by id) as 'rn' from person) ct where ct.rn = 1);
+2. delete from Person p where id in (select id from (select *, row_number() over(partition by email
+order by id) as 'rn' from person) ct where ct.rn != 1);
+
+3. delete p1 from Person p1 inner join Person p2 where p1.email = p2.email and p1.id > p2.id;
