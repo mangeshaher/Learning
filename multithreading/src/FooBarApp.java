@@ -15,17 +15,14 @@ public class FooBarApp {
     public void foo(Runnable printFoo) throws InterruptedException {
 
         for (int i = 0; i < n; i++) {
-            //System.out.println("Running foo for i -> " + i);
             synchronized (lock){
                 if(fooPrinted){
-                    //System.out.println("Inside waiting for foo");
                     lock.wait();
                 }
                 if(!fooPrinted){
                     printFoo.run();
                     fooPrinted = true;
                     lock.notify();
-                    //System.out.println("notified for foo");
                 }
             }
         }
@@ -34,17 +31,14 @@ public class FooBarApp {
     public void bar(Runnable printBar) throws InterruptedException {
 
         for (int i = 0; i < n; i++) {
-            //System.out.println("Running bar for i -> " + i);
             synchronized (lock){
                 if(!fooPrinted){
                     lock.wait();
-                   // System.out.println("Inside waiting for bar");
                 }
                 if(fooPrinted){
                     printBar.run();
                     fooPrinted = false;
                     lock.notify();
-                    //System.out.println("notified for bar");
                 }
             }
         }
