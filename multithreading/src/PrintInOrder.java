@@ -6,7 +6,7 @@ public class PrintInOrder {
 
     private Lock lock = new ReentrantLock();
     private Condition condition = lock.newCondition();
-    private Condition scondition = lock.newCondition();
+    //private Condition scondition = lock.newCondition();
     private boolean oneDone = false;
     private boolean twoDone = false;
 
@@ -14,7 +14,7 @@ public class PrintInOrder {
         lock.lock();
         System.out.println("In first");
         oneDone = true;
-        condition.signal();
+        condition.signalAll();
         lock.unlock();
     }
 
@@ -25,14 +25,15 @@ public class PrintInOrder {
         }
         System.out.println("In second");
         twoDone = true;
-        scondition.signal();
+        //scondition.signal();
+        condition.signalAll();
         lock.unlock();
     }
 
     private void third() throws InterruptedException {
         lock.lock();
         while(!twoDone){
-            scondition.await();
+            condition.await();
         }
         System.out.println("In third");
         lock.unlock();
