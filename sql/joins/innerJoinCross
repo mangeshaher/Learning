@@ -1,0 +1,25 @@
+Table: Employee
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
+| department  | varchar |
+| managerId   | int     |
++-------------+---------+
+In SQL, id is the primary key column for this table.
+Each row of this table indicates the name of an employee, their department, and the id of their manager.
+If managerId is null, then the employee does not have a manager.
+No employee will be the manager of themself.
+
+
+Find the managers with at least five direct reports
+
+
+INITIALLY I WROTE
+
+--> select e1.name from Employee e1 inner join Employee e2 on e1.id = e2.managerId group by e1.name having count(e1.name) >=5;
+(BUT THIS DOESN'T DIFFERENTIATE BETWEEN TWO NAMES AND CAN GIVE OTHER SAME NAME EVEN IF IT DOESN'T SATISFY HAVING CONDITION)
+
+--> select e1.name from Employee e1 inner join Employee e2 on e1.id = e2.managerId group by e1.name, e1.id having count(e1.name) >=5;
