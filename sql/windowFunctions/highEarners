@@ -1,0 +1,48 @@
+
+P6(USING DENSE_RANK INSTEAD OF ROW_NUMBER FOR UNIQUE SET OF VALUE RANK)
+
+Table: Employee
+
++--------------+---------+
+| Column Name  | Type    |
++--------------+---------+
+| id           | int     |
+| name         | varchar |
+| salary       | int     |
+| departmentId | int     |
++--------------+---------+
+id is the primary key column for this table.
+departmentId is a foreign key of the ID from the Department table.
+Each row of this table indicates the ID, name, and salary of an employee. It also contains the ID of their department.
+
+
+Table: Department
+
++-------------+---------+
+| Column Name | Type    |
++-------------+---------+
+| id          | int     |
+| name        | varchar |
++-------------+---------+
+id is the primary key column for this table.
+Each row of this table indicates the ID of a department and its name.
+
+
+A company's executives are interested in seeing who earns the most money in each of the company's departments. A high earner in a department is an employee who has a salary in the top three unique salaries for that department.
+
+Write an SQL query to find the employees who are high earners in each of the departments.
+
+Return the result table in any order.
+
+
+--> with mycte as(
+  select d.name as dname, e.name as ename, e.salary, ROW_NUMBER() over(partition by d.name order by e.salary desc) as rn from Employee e inner join Department d on e.departmentId = d.id
+)
+select dname as Department, ename as Employee, salary as Salary from mycte where mycte.rn < 4;
+-----------INITIALLY I WROTE THIS BUT HERE WE NEED NOT HAVE TWO SALARIES AS SAME, THAT MEANS IT NEEDED TOP 3 UNIQUE SALARIES, SO WE USED DENSE_RANK AS IT GIVES SAME RANK TO SAME VALUE
+
+
+--> with mycte as(
+  select d.name as dname, e.name as ename, e.salary, DENSE_RANK() over(partition by d.name order by e.salary desc) as rn from Employee e inner join Department d on e.departmentId = d.id
+)
+select dname as Department, ename as Employee, salary as Salary from mycte where mycte.rn < 4;
