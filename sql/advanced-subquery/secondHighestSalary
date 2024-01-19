@@ -47,4 +47,8 @@ Output:
 +---------------------+
 
 Query:-
-select max(e.salary) as SecondHighestSalary from employee e where e.salary < (select max(salary) from employee);
+--> select e.salary as SecondHighestSalary from employee e order by e.salary desc limit 1 offset 1;
+(BUT THIS DOESN'T GIVE NULL IF NO SECOND HIGHEST AVAILABLE)
+
+--> select max(e.salary) as SecondHighestSalary from employee e where e.salary < (select max(salary) from employee);
+(SO WE INTRODUCE AGGREGATE MAX WITH SUBQUERY)
