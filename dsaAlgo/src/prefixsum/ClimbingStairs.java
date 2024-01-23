@@ -1,3 +1,5 @@
+package prefixsum;
+
 public class ClimbingStairs {
     /*
    You are climbing a staircase. It takes n steps to reach the top.
