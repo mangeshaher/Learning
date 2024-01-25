@@ -37,7 +37,7 @@ Constraints:
 nums is sorted in non-decreasing order.
 */
 
-public class RemoveDuplicates {
+public class RemoveDuplicatesEasy {
     public int removeDuplicatesUnordered(Integer[] nums) {
         int first = 0;
         int nextUnique = 0;
@@ -81,7 +81,7 @@ public class RemoveDuplicates {
     public static void main(String[] args) {
         Integer[] nums = new Integer[]{5,1,2,6,2,1,5,6};
         Integer[] numsOrdered = new Integer[]{1,1,2,2,5,5,6,6};
-        RemoveDuplicates removeDuplicates = new RemoveDuplicates();
+        RemoveDuplicatesEasy removeDuplicates = new RemoveDuplicatesEasy();
         removeDuplicates.removeDuplicatesUnordered(nums);
         removeDuplicates.removeDuplicatesOrdered(numsOrdered);
         Arrays.asList(nums).forEach(System.out::print);

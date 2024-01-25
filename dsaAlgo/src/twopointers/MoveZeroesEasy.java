@@ -18,7 +18,7 @@ Constraints:
 -231 <= nums[i] <= 231 - 1
 */
 
-public class MoveZeroes {
+public class MoveZeroesEasy {
     public void moveZeroes(int[] nums) {
         int i=1;
         int nextNonZero=1;
@@ -43,8 +43,8 @@ public class MoveZeroes {
     }
 
     public static void main(String[] args) {
-        MoveZeroes moveZeroes = new MoveZeroes();
-        int[] arr = new int[]{0,1,0,7,8};
+        MoveZeroesEasy moveZeroes = new MoveZeroesEasy();
+        int[] arr = new int[]{0,0,0,1,0,7,8};
         moveZeroes.moveZeroes(arr);
         for(int i=0;i<arr.length;i++){
             System.out.print(arr[i] + " ");
