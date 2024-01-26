@@ -21,7 +21,7 @@ n is an integer.
 Either x is not zero or n > 0.
 -104 <= xn <= 104
         */
-public class PowerXN {
+public class PowerXNMedium {
     public double myPow(double x, int n) {
         if(n<0){
             return 1/call(x, -1*n);
