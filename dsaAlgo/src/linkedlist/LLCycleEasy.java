@@ -7,6 +7,9 @@ class ListNode {
           val = x;
           next = null;
       }
+      ListNode(int val, ListNode next) {
+          this.val = val; this.next = next;
+      }
 }
 public class LLCycleEasy {
     public boolean hasCycle(ListNode head) {
