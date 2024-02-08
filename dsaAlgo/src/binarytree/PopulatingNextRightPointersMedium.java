@@ -32,6 +32,9 @@ You may only use constant extra space.
 The recursive approach is fine. You may assume implicit stack space does not count as extra space for this problem.
 */
 
+import java.util.ArrayList;
+import java.util.List;
+
 class Node {
     public int val;
     public Node left;
