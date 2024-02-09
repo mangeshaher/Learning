@@ -41,14 +41,14 @@ public class OpenLock {
         int minMoves = -1;
         Set<String> dead = new HashSet<>(Arrays.asList(deadends));
         Set<String> visited = new HashSet<>();
-        Queue<Pair<String, Integer>> q = new LinkedList<>();
+        Queue<Pair> q = new LinkedList<>();
         q.offer(new Pair("0000", 0));
         if(dead.contains("0000")){
             return minMoves;
         }
         visited.add("0000");
         while(!q.isEmpty()){
-            Pair<String, Integer> p = q.poll();
+            Pair p = q.poll();
             String s = p.getKey();
             int dis = p.getValue();
             if(s.equals(target)){
@@ -88,5 +88,23 @@ public class OpenLock {
             return '9';
         }
         return --ch;
+    }
+}
+
+class Pair{
+    String key;
+    int value;
+
+    public Pair(String k, int v){
+        key = k;
+        value = v;
+    }
+
+    public String getKey(){
+        return key;
+    }
+
+    public int getValue(){
+        return value;
     }
 }
