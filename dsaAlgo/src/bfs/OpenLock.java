@@ -1,4 +1,4 @@
-package dfs;
+package bfs;
 
 import java.util.*;
 

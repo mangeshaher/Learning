@@ -1,4 +1,4 @@
-package dfs;
+package bfs;
 
 /*
 You are given an m x n grid rooms initialized with these three possible values.
