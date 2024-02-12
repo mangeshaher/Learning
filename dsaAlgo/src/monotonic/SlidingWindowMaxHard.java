@@ -1,4 +1,4 @@
-package slidingwindow;
+package monotonic;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

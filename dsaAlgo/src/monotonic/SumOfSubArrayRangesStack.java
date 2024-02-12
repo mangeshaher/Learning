@@ -1,4 +1,4 @@
-package dfs;
+package monotonic;
 
 import java.util.Arrays;
 import java.util.Stack;
