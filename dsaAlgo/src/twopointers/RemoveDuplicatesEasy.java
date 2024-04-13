@@ -65,6 +65,7 @@ public class RemoveDuplicatesEasy {
         return first;
     }
 
+    //We don't care for first pointer we just want to get unique elements at start
     public int removeDuplicatesOrdered(Integer[] nums) {
         int first = 1;
         int nextUnique = 1;
