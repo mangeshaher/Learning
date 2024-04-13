@@ -1,4 +1,4 @@
-package twopointers;
+package fastslowpointer;
 /*
 Given an array of integers nums containing n + 1 integers where each integer is in the range [1, n] inclusive.
 
@@ -29,9 +29,9 @@ public class DuplicateMedium {
         do{
             slow = nums[slow];
             fast = nums[nums[fast]];
-        }while(slow!=fast);
+        }while(slow!=fast);//first we make them intersect in cycle
         fast = nums[0];
-        while(slow!=fast){
+        while(slow!=fast){// we find entry to cycle
             slow = nums[slow];
             fast = nums[fast];
         }
