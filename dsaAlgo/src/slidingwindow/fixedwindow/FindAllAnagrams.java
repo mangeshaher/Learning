@@ -35,54 +35,40 @@ import java.util.*;
 public class FindAllAnagrams {
     public List<Integer> findAnagrams(String s, String p) {
         int l = s.length();
+        int pl = p.length();
         List<Integer> retval = new ArrayList<>();
         Map<Character, Integer> map = new HashMap<>();
-        int count = 0;
-        for(int i=0;i<p.length();i++){
-            if(!map.containsKey(p.charAt(i))){
-                count++;
-                map.put(p.charAt(i), 1);
-            }
-            else{
-                map.put(p.charAt(i), map.get(p.charAt(i))+1);
-            }
+        for(Character c : p.toCharArray()){
+            map.put(c, map.getOrDefault(c, 0) + 1);
         }
+        int count = map.size();
         int start = 0;
         int end = 0;
         while(end<l){
-            if(map.keySet().contains(s.charAt(end))){
-                map.computeIfPresent(s.charAt(end), (key,val) -> val-1);
-                //System.out.println(count + " " + start);
-                if(map.get(s.charAt(end)) == 0){
+            //System.out.println("start :- " + start + " end :- " + end + " count :- " + count);
+            Character e = s.charAt(end);
+            if(map.containsKey(e)){
+                map.put(e, map.get(e)-1);
+                if(map.get(e) == 0){
                     count--;
                 }
+            }
+            if(end-start+1<pl){
+                end++;
+            }
+            else if(end-start+1==pl){
+                Character st = s.charAt(start);
                 if(count==0){
                     retval.add(start);
-                    map.put(s.charAt(start), map.get(s.charAt(start))+1);
+                }
+                if(map.containsKey(st) && map.get(st) == 0){
                     count++;
-                    start++;
                 }
-            }
-            else{
-                while(start!=end+1){
-                    if(map.containsKey(s.charAt(start))){
-                        if(map.get(s.charAt(start)) == 0){
-                            count++;
-                        }
-                        map.put(s.charAt(start), map.get(s.charAt(start))+1);
-                    }
-                    start++;
-                }
-            }
-            end++;
-            if(end-start+1 > p.length()){
-                if(map.containsKey(s.charAt(start))){
-                    if(map.get(s.charAt(start)) == 0){
-                        count++;
-                    }
-                    map.put(s.charAt(start), map.get(s.charAt(start))+1);
+                if(map.containsKey(st)){
+                    map.put(st, map.get(st) + 1);
                 }
                 start++;
+                end++;
             }
         }
         return retval;

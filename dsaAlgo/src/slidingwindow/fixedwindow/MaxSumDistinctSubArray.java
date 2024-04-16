@@ -40,37 +40,29 @@ Constraints:
 
 public class MaxSumDistinctSubArray {
     public long maximumSubarraySum(int[] nums, int k) {
-        long sum = 0;
+        int l = nums.length;
         Map<Integer, Integer> map = new HashMap<>();
-        for(int i=0;i<k;i++){
-            if(map.containsKey(nums[i])){
-                map.put(nums[i], map.get(nums[i])+1);
+        int left = 0;
+        int right = 0;
+        long maxSum = 0;
+        long currSum = 0;
+        while(right<l){
+            currSum+=nums[right];
+            map.put(nums[right], map.getOrDefault(nums[right], 0)+1);
+            if(right-left+1<k){
+                right++;
             }
-            else{
-                map.put(nums[i], 1);
-            }
-            sum+=nums[i];
-        }
-        long msum = map.keySet().size() == k ? sum : 0;
-        for(int i=k;i<nums.length;i++){
-            if(map.get(nums[i-k]) > 1){
-                map.put(nums[i-k], map.get(nums[i-k])-1);
-            }
-            else{
-                map.remove(nums[i-k]);
-            }
-            sum-=nums[i-k];
-            sum+=nums[i];
-            if(map.containsKey(nums[i])){
-                map.put(nums[i], map.get(nums[i])+1);
-            }
-            else{
-                map.put(nums[i], 1);
-                if(sum>msum && map.keySet().size()==k){
-                    msum = sum;
+            else if(right-left+1==k){
+                if(map.size()==k){
+                    maxSum = (maxSum<currSum) ? currSum : maxSum;
                 }
+                currSum-=nums[left];
+                map.put(nums[left], map.get(nums[left])-1);
+                map.remove(nums[left], 0);
+                left++;
+                right++;
             }
         }
-        return msum;
+        return maxSum;
     }
 }
