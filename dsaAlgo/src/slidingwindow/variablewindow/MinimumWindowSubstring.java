@@ -43,12 +43,7 @@ public class MinimumWindowSubstring {
         int tl = t.length();
         Map<Character, Integer> map = new HashMap<>();
         for(int i=0;i<tl;i++){
-            if(map.containsKey(t.charAt(i))){
-                map.put(t.charAt(i), map.get(t.charAt(i))+1);
-            }
-            else{
-                map.put(t.charAt(i), 1);
-            }
+            map.put(t.charAt(i), map.getOrDefault(t.charAt(i), 0) + 1);
         }
         int count = map.size();
         int min = Integer.MAX_VALUE;
@@ -61,15 +56,11 @@ public class MinimumWindowSubstring {
                 if(map.get(s.charAt(right)) == 0){
                     count--;
                 }
-                right++;
-            }
-            else{
-                right++;
             }
             while(count==0){
                 if(right-left+1<min){
                     min = right-left+1;
-                    mString = s.substring(left, right);
+                    mString = s.substring(left, right+1);
                 }
                 if(map.containsKey(s.charAt(left))){
                     if(map.get(s.charAt(left))==0){
@@ -79,6 +70,7 @@ public class MinimumWindowSubstring {
                 }
                 left++;
             }
+            right++;
         }
         return mString;
     }

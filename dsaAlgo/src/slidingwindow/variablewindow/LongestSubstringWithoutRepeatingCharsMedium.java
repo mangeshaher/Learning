@@ -32,66 +32,23 @@ s consists of English letters, digits, symbols and spaces.
 public class LongestSubstringWithoutRepeatingCharsMedium {
     public int lengthOfLongestSubstring(String s) {
         int l = s.length();
-        Set<Character> charss = new HashSet<>();
-        int maxLength = 1;
-        int currLength = 1;
-        int left = 0;
-        if(l>0){
-            charss.add(s.charAt(left));
-        }
-        int right = 1;
-        while(right < l){
-            if(charss.contains(s.charAt(right))){
-                charss = new HashSet<>();
-                left = left + 1;
-                charss.add(s.charAt(left));
-                currLength = 1;
-                right = left+1;
-            }
-            else{
-                charss.add(s.charAt(right));
-                currLength++;
-                if(currLength > maxLength){
-                    maxLength = currLength;
-                }
-                right++;
-            }
-        }
-        return l > 0 ? maxLength : 0;
-    }
-
-    //Sliding Window with count
-    public int lengthOfLongestSubstringSlidingCount(String s) {
-        int l = s.length();
         Map<Character, Integer> map = new HashMap<>();
         int maxLength = 0;
         int left = 0;
         int right = 0;
-        while(right<l){
-            if(map.containsKey(s.charAt(right))){
-                map.put(s.charAt(left), map.get(s.charAt(left))-1);
-                map.remove(s.charAt(left), 0);
-                if(map.containsKey(s.charAt(right))){
-                    map.put(s.charAt(right), map.get(s.charAt(right))+1);
-                }
-                else{
-                    map.put(s.charAt(right), 1);
-                }
-                left++;
-                right++;
-            }
-            else{
-                map.put(s.charAt(right), 1);
-                if(right-left+1>maxLength && map.keySet().size()==right-left+1){
-                    maxLength = right-left+1;
-                }
-                else{
+        while(right < l){
+            map.put(s.charAt(right), map.getOrDefault(s.charAt(right), 0) + 1);
+            if(map.size()<right-left+1){
+                while(map.size()<right-left+1){
                     map.put(s.charAt(left), map.get(s.charAt(left))-1);
                     map.remove(s.charAt(left), 0);
                     left++;
                 }
-                right++;
             }
+            else if(map.size()==right-left+1){
+                maxLength = Integer.max(maxLength, right-left+1);
+            }
+            right++;
         }
         return maxLength;
     }

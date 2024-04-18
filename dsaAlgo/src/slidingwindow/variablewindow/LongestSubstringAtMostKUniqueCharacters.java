@@ -27,22 +27,15 @@ Constraints:
 public class LongestSubstringAtMostKUniqueCharacters {
     public int lengthOfLongestSubstringKDistinct(String s, int k) {
         int l = s.length();
-        int maxLength = Integer.MIN_VALUE;
+        int maxLength = 0;
         Map<Character, Integer> map = new HashMap<>();
         int left = 0;
         int right = 0;
         while(right < l){
+            map.put(s.charAt(right), map.getOrDefault(s.charAt(right), 0) + 1);
+            //at most k -- so less than k is also accepted for max condn
             if(map.size()<=k){
-                if(map.containsKey(s.charAt(right))){
-                    map.put(s.charAt(right), map.get(s.charAt(right))+1);
-                }
-                else{
-                    map.put(s.charAt(right), 1);
-                }
-                if(map.size()<=k){
-                    maxLength = Integer.max(maxLength, right-left+1);
-                }
-                right++;
+                maxLength = Integer.max(maxLength, right-left+1);
             }
             else{
                 while(map.size()>k){
@@ -51,7 +44,8 @@ public class LongestSubstringAtMostKUniqueCharacters {
                     left++;
                 }
             }
+            right++;
         }
-        return maxLength==Integer.MIN_VALUE ? 0 : maxLength;
+        return maxLength;
     }
 }
