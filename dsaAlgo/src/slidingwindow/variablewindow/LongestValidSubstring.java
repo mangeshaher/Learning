@@ -36,20 +36,21 @@ public class LongestValidSubstring {
         int l = word.length();
         Set<String> set = new HashSet<>();
         forbidden.forEach(set::add);
-        int maxRight = l-1;
-        int left = l-1;
+        int maxLeft = 0;
         int maxLength = 0;
-        while(left>=0){
-            int right = left;
-            while(right<=Integer.min(left+10, maxRight)){
+        int left = 0;
+        int right = 0;
+        while(right<l){
+            left = right;
+            while(left>right-10 && left>=maxLeft){
                 if(set.contains(word.substring(left, right+1))){
-                    maxRight = right-1;
+                    maxLeft = left+1;
                     break;
                 }
-                right++;
+                left--;
             }
-            maxLength = Integer.max(maxLength, maxRight-left+1);
-            left--;
+            maxLength = Integer.max(maxLength, right-maxLeft+1);
+            right++;
         }
         return maxLength;
     }
