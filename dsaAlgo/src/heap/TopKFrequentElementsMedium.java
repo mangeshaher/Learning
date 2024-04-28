@@ -33,32 +33,14 @@ public class TopKFrequentElementsMedium {
         int[] retval = new int[k];
         Map<Integer, Integer> map = new HashMap<>();
         for(int i=0;i<nums.length;i++){
-            if(map.containsKey(nums[i])){
-                map.put(nums[i], map.get(nums[i])+1);
-            }
-            else{
-                map.put(nums[i], 1);
-            }
+            map.put(nums[i], map.getOrDefault(nums[i], 0)+1);
         }
         PriorityQueue<Map.Entry<Integer, Integer>> q =
-                new PriorityQueue<>(k, new EntryValueComparator());
+                new PriorityQueue<>(k, (e1, e2) -> e2.getValue()-e1.getValue());
         map.entrySet().forEach(e -> q.offer(e));
         for(int i=0;i<k;i++){
             retval[i] = q.poll().getKey();
         }
         return retval;
-    }
-}
-
-class EntryValueComparator implements Comparator<Map.Entry<Integer, Integer>> {
-    public int compare(Map.Entry<Integer, Integer> e1, Map.Entry<Integer, Integer> e2) {
-        if (e1.getValue() < e2.getValue())
-            return 1;
-        else if (e1.getValue() > e2.getValue()){
-            return -1;
-        }
-        else{
-            return 0;
-        }
     }
 }
