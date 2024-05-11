@@ -1,4 +1,4 @@
-package dp;
+package dp.unboundedknapsack;
 
 /*
 You are given an integer array coins representing coins of different denominations and an integer amount representing
