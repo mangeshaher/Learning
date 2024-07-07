@@ -1,4 +1,4 @@
-package binarysearch;
+package binarySearchOnAnswer;
 
 /*
 Koko loves to eat bananas. There are n piles of bananas, the ith pile has piles[i] bananas. The guards have gone and
@@ -27,31 +27,32 @@ piles.length <= h <= 109
 
 public class KokoEatingBananas {
     public int minEatingSpeed(int[] piles, int h) {
-        int max = Integer.MIN_VALUE;
+        int right = Integer.MIN_VALUE;
         int sum = 0;
         for(int i:piles){
-            max = Math.max(max, i);
+            right = Math.max(right, i);
             sum+=i;
         }
-        int min = Math.ceilDiv(sum,h);
-        return binarySearch(piles, min, max, h);
+        int left = Math.ceilDiv(sum,h);
+        int minEatingSpeed = Integer.MAX_VALUE;
+        while(left<=right){
+            int mid = (left + right)/2;
+            if(bananasEatingTime(piles, mid)<=h){
+                minEatingSpeed = Integer.min(minEatingSpeed, mid);
+                right = mid-1;
+            }
+            else{
+                left = mid+1;
+            }
+        }
+        return minEatingSpeed;
     }
 
-    public int binarySearch(int[] piles, int l, int r, int h){
-        if(r==l){
-            return r;
+    public int bananasEatingTime(int[] piles, long mid){
+        int time = 0;
+        for(int pile:piles){
+            time+=(Math.ceil((double) pile / mid));
         }
-        int mid = (l+r)/2;
-        int total = 0;
-        for(int i:piles){
-            total+=Math.ceil((double) i/mid);
-        }
-        boolean canFinish = total<=h;
-        if(canFinish){
-            return binarySearch(piles, l, mid, h);
-        }
-        else{
-            return binarySearch(piles, mid+1, r, h);
-        }
+        return time;
     }
 }
